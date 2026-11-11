@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -63,11 +64,14 @@ app.use('/uploads', express.static(uploadDir));
 
 // Healthcheck
 app.get('/api/health', (req: Request, res: Response) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected (MongoDB Atlas/Local)' : 'resilient fallback (localStore)';
   res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'SkillSync API Server',
     environment: process.env.NODE_ENV || 'development',
+    database: dbStatus,
+    uptime: `${Math.floor(process.uptime())}s`,
   });
 });
 
