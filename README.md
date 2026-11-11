@@ -279,3 +279,4 @@ npm test
 
 ## 📄 License
 This project is licensed under the MIT License. Developed for modern skill sharing, flexible learning, and educator empowerment.
+

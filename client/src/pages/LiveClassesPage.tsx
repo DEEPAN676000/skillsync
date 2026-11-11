@@ -50,10 +50,10 @@ export const LiveClassesPage: React.FC = () => {
       return;
     }
 
-    const userId = user.id;
+    const userId = user.id || (user as any)._id;
     const isTeacher = liveClass.teacher?._id === userId || (liveClass.teacher as any)?.id === userId;
     const isEnrolled = liveClass.enrolledLearners?.some(
-      (e) => (e.learner as any)?._id === userId || (e.learner as any)?.id === userId
+      (e) => (e.learner as any)?._id === userId || (e.learner as any)?.id === userId || (e.learner as any) === userId
     );
 
     if (isTeacher || isEnrolled || user.role === 'admin' || liveClass.price === 0) {
