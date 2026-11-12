@@ -1,9 +1,17 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import localDataService from './localDataService';
 
+const getBaseURL = () => {
+  const envUrl = (import.meta as any).env?.VITE_API_BASE_URL;
+  if (envUrl) {
+    return envUrl.endsWith('/api') ? envUrl : `${envUrl.replace(/\/$/, '')}/api`;
+  }
+  return '/api';
+};
+
 const API = axios.create({
-  baseURL: '/api',
-  timeout: 4000,
+  baseURL: getBaseURL(),
+  timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
   },
